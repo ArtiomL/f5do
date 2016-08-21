@@ -12,27 +12,33 @@ __license__ = 'MIT'
 __version__ = '0.1'
 
 class iControl(object):
+
 	def __init__(self, strHost, strUser, strPasswd):
 		self.host = strHost
 		self.user = strUser
 		self.passwd = strPasswd
-		self.murl = 'https://%s/mgmt/tm' % strHost
+		self.mburl = 'https://%s/mgmt/tm' % strHost
 
-		self.objSession = requests.session()
-		self.objSession.auth = (strUser, strPasswd)
-		self.objSession.verify = False
-		self.objSession.headers.update({ 'Content-Type': 'application/json' })
+		self.objHSession = requests.session()
+		self.objHSession.auth = (strUser, strPasswd)
+		self.objHSession.verify = False
+		self.objHSession.headers.update({ 'Content-Type': 'application/json' })
+
+
+	def get(self, strURL):
+		try:
+			return self.objHSession.get(strURL).json()
+		except Exception as e:
+			return { 'Exception' : str(e) }
+
 
 	def getPool(self, strPName = '', strPartition = '~Common~'):
 		if not strPName:
 			strPartition = ''
-		strURL = '%s/ltm/pool/%s%s' % (self.murl, strPartition, strPName)
-		req = self.objSession.get(strURL)
-		return req.json()
+		return self.get('%s/ltm/pool/%s%s' % (self.mburl, strPartition, strPName))
+
 
 	def getAddrList(self, strALName = '', strPartition = '~Common~'):
 		if not strALName:
 			strPartition = ''
-		strURL = '%s/security/firewall/address-list/%s%s' % (self.murl, strPartition, strALName)
-		req = self.objSession.get(strURL)
-		return req.json()
+		return self.get('%s/security/firewall/address-list/%s%s' % (self.mburl, strPartition, strALName))
