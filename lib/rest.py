@@ -31,6 +31,12 @@ class iControl(object):
 			return { 'Exception' : repr(e) }
 
 
+	def getNode(self, strNName = '', strPartition = '~Common~'):
+		if not strNName:
+			strPartition = ''
+		return self.get('%s/ltm/node/%s%s' % (self.mburl, strPartition, strNName))
+
+
 	def getPool(self, strPName = '', strPartition = '~Common~'):
 		if not strPName:
 			strPartition = ''
