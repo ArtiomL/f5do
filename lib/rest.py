@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-# f5do - lib: REST API Client
+# f5do - lib: REST API
 # https://github.com/ArtiomL/f5do
 # Artiom Lichtenstein
-# v0.1, 21/08/2016
+# v0.2, 25/08/2016
 
-import json
 import requests
 
 __author__ = 'Artiom Lichtenstein'
 __license__ = 'MIT'
-__version__ = '0.1'
+__version__ = '0.2'
 
 class iControl(object):
 
@@ -29,7 +28,7 @@ class iControl(object):
 		try:
 			return self.objHSession.get(strURL).json()
 		except Exception as e:
-			return { 'Exception' : str(e) }
+			return { 'Exception' : repr(e) }
 
 
 	def getPool(self, strPName = '', strPartition = '~Common~'):
