@@ -7,7 +7,3 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 A RESTful API suite to automate common F5 tasks using iControl.
-
-  
-<br><br>
-## Test
